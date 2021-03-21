@@ -15,7 +15,8 @@ export default class App extends Component {
     this.state = {
       number: 0,
       iconName: 'play',
-      last: null
+      last: null,
+      resetBtnControl: false
     };
 
     // Variável do timer do relógio
@@ -37,7 +38,10 @@ export default class App extends Component {
       this.timer = setInterval(() => {
         this.setState({ number: this.state.number + 0.1 })
       }, 100);
-      this.setState({ iconName: 'stop' });
+      this.setState({
+        iconName: 'stop',
+        resetBtnControl: true
+      });
     }
   }
 
@@ -50,7 +54,8 @@ export default class App extends Component {
     this.setState({
       last: this.state.number,
       number: 0,
-      iconName: 'play'
+      iconName: 'play',
+      resetBtnControl: false
     })
   }
 
@@ -66,9 +71,11 @@ export default class App extends Component {
           <Text style={styles.timer}>{this.state.number.toFixed(1)}</Text>
         </View>
 
-        <TouchableOpacity style={styles.reset} onPress={this.reset}>
-          <Text style={styles.resetText}>Zerar</Text>
-        </TouchableOpacity>
+        {this.state.resetBtnControl && (
+          <TouchableOpacity style={styles.reset} onPress={this.reset}>
+            <Text style={styles.resetText}>Zerar</Text>
+          </TouchableOpacity>
+        )}
 
         <View style={styles.lastArea}>
           <Text style={styles.runText}>
